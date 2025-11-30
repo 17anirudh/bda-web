@@ -1,0 +1,42 @@
+---
+import NavMenu from "@custom/_NavMenu.tsx";
+import { Fps } from "@components/_fps.tsx";
+const { title } = Astro.props;
+import "@/_global.css";
+
+const isDevelopment = process.env.NODE_ENV === "development";
+---
+<script>
+import { handleKeyDown } from "@/helper";
+
+  const body = document.body;
+  body.addEventListener("keydown", handleKeyDown);
+</script>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body
+        class="bg-neutral-900 text-amber-300 flex flex-col justify-center items-center gap-9"
+    >
+        <Fps
+            client:load
+            strategy="fixed"
+            position="top-right"
+            enabled={isDevelopment}
+            warningThreshold={45}
+            errorThreshold={30}
+        />
+        <header>
+            <NavMenu client:load />
+        </header>
+        <main>
+            <slot class="w-screen flex flex-col" />
+        </main>
+        <footer>Footer</footer>
+    </body>
+</html>

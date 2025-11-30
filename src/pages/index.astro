@@ -1,0 +1,44 @@
+---
+import Layout from "./layout.astro";
+import { Image } from "astro:assets";
+import { descItems } from "@/helper";
+---
+
+<Layout title="Home">
+    <section id="0" class="flex flex-col justify-center items-center">
+        <h1 class="text-4xl">Big Data Analytics</h1>
+        <p class="text-xl p-5 font-light text-neutral-50">
+            Big Data refers to vast and rapidly growing volumes of data that are too large and complex for traditional data processing tools to manage. This data comes in many forms structured (e.g., tables), semi-structured (e.g., JSON, XML), and unstructured (e.g., text, images, video).
+        </p>
+    </section>
+    <section id="1" class="w-full flex flex-col justify-center items-center max-w-screen mt-20">
+        <h1 class="text-4xl">Navigations</h1>
+        <p class="text-xl p-5 font-light text-neutral-50">
+            Chapter - wise material is upload in following pages:
+        </p>
+        <ul class="list-disc list-inside">
+            {descItems.map((item) => (
+            <li>
+                <a href={item.path} class="hover:underline" title={item.display}>{item.description}</a>
+            </li>
+            ))}
+        </ul>
+    </section>
+    <section id="2" class="w-full flex flex-col justify-center items-center max-w-screen mt-20">
+        <div class="p-6 h-100" id="image-container">
+            <h1 class="text-4xl">Brief Overview</h1>
+            <Image
+                src="https://technofaq.org/wp-content/uploads/2014/10/Big-data-620x350.jpg.webp"
+                alt="TechFaq BDA Overview"
+                layout="full-width"
+                priority
+                inferSize
+                class="brightness-75"
+            />
+        </div>
+        <p class="text-xl p-5 font-light text-neutral-50">
+            Big Data refers to vast and rapidly growing volumes of data that are too large and complex for traditional data processing tools to manage. This data comes in many forms structured (e.g., tables), semi-structured (e.g., JSON, XML), and unstructured (e.g., text, images, video).
+            With the explosion of devices, sensors, online services, and digital platforms, data is now generated at an unprecedented rate. This growth makes it essential for organizations to adopt advanced tools and technologies to capture, store, analyze, and utilize this data effectively.
+        </p>
+    </section>
+</Layout>

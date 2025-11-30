@@ -1,0 +1,220 @@
+---
+import Layout from './layout.astro';
+import { Image } from 'astro:assets';
+import { CodeBlock } from '@components/_code-block.tsx';
+import { map_reduce_code } from '@/helper';
+---
+
+<Layout title="Hadoop">
+    <div>
+        <section id="0" class="flex flex-row items-center justify-center">
+            <div id="logo">
+                <Image
+                  src="https://hadoop.apache.org/elephant.png"
+                  alt="Apache Hadoop Logo"
+                  width={100}
+                  height={100}
+                  priority
+                />
+            </div>
+          <h1 class="text-4xl font-bold mb-4 text-yellow-400">Apache Hadoop</h1>
+        </section>
+        <section id="1" class="flex flex-col items-center justify-center p-4">
+            <p class="text-lg text-amber-50 ">
+                The <span class="text-red-600 underline">Apache Hadoop</span> software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage. Rather than rely on hardware to deliver high-availability, the library itself is designed to detect and handle failures at the application layer, so delivering a highly-available service on top of a cluster of computers, each of which may be prone to failures.
+            </p>
+            <h3 class="text-xl">
+                Hadoop's architecture is divided into master and slave components, each managed by specific daemons:
+            </h3>
+            <ul class="list-item list-disc text-lg text-neutral-50">
+                <li>
+                    <span class="underline">Master daemons:</span> NameNode, Secondary NameNode, ResourceManager
+                </li>
+                <li>
+                    <span class="underline">Slave daemons:</span> DataNode, NodeManager
+                </li>
+            </ul>
+            <p class="text-lg text-neutral-100 text-center p-9">With the introduction of YARN in Hadoop 2, resource management was decoupled from data processing, significantly improving Hadoop’s scalability, flexibility, and multi-application support.</p>
+            <div id="picture" class="w-fit">
+                <Image
+                    src="https://media.geeksforgeeks.org/wp-content/uploads/20250623161536692190/Hadoop.webp",
+                    alt="Hadoop Architecture"
+                    loading="eager"
+                    layout="full-width"
+                    inferSize
+                    class="brightness-75"
+                />
+            </div>
+        </section>
+    </div>
+    <section id="hdfs" class="flex flex-col items-center justify-center p-6 mt-8">
+        <section id="overview">
+            <h1 class="text-2xl font-bold mb-4 underline text-left">Hadoop Distributed File System (HDFS)</h1>
+            <h3 class="text-xl underline">Overview: </h3>
+            <p class="text-lg mb-4 text-amber-50">
+                The Hadoop Distributed File System (HDFS) is a distributed file system designed to run on commodity hardware. It has many similarities with existing distributed file systems. However, the differences from other distributed file systems are significant. HDFS is highly fault-tolerant and is designed to be deployed on low-cost hardware. HDFS provides high throughput access to application data and is suitable for applications that have large data sets. HDFS relaxes a few POSIX requirements to enable streaming access to file system data. HDFS was originally built as infrastructure for the Apache Nutch web search engine project. HDFS is part of the Apache Hadoop Core project.
+            </p>
+            <div id="picture" class="w-fit">
+                <Image
+                    src="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png",
+                    alt="HDFS Architecture"
+                    loading="lazy"
+                    layout="full-width"
+                    inferSize
+                    class="brightness-75"
+                />
+            </div>
+        </section>
+        <section id="namenode" class="text-amber-50">
+            <h3 class="text-xl underline">NameNode: </h3>
+            <ul class="list-item list-disc text-lg font-light text-amber-50">
+                <li>
+                    An HDFS cluster consists of a single <span class="underline">NameNode</span>, a master server that manages the file system namespace and regulates access to files by clients.  The NameNode executes file system namespace operations like opening, closing, and renaming files and directories.<br /> It also determines the mapping of blocks to DataNodes. The existence of a single NameNode in a cluster greatly simplifies the architecture of the system.<br /> The NameNode is the arbitrator and repository for all HDFS metadata. The system is designed in such a way that user data never flows through the NameNode.
+                </li>
+                <li>
+                    The primary purpose of Namenode is to manage all the MetaData. Metadata is the list of files stored in HDFS(Hadoop Distributed File System)
+                </li>
+                <li>
+                    All information regarding the logs of the transactions happening in a Hadoop cluster (when or who read/wrote the data) will be stored in MetaData. MetaData is stored in the memory.
+                </li>
+                <li>
+                    <p>Starting of NameNode</p>
+                    <pre>hadoop-daemon.sh start namenode</pre>
+                </li>
+                <li>
+                    <p>Stopping of NameNode</p>
+                    <pre>hadoop-daemon.sh stop namenode</pre>
+                </li>
+            </ul>
+        </section>
+        <section id="datanode" class="text-amber-50">
+            <h3 class="text-xl underline">DataNode: </h3>
+            <ul class="list-item list-disc text-lg font-light text-amber-50">
+                <li>
+                    In addition, there are a number of <span class="underline">DataNodes</span>, usually one per node in the cluster, which manage storage attached to the nodes that they run on. HDFS exposes a file system namespace and allows user data to be stored in files. <br />Internally, a file is split into one or more blocks and these blocks are stored in a set of DataNodes. The DataNodes are responsible for serving read and write requests from the file system’s clients. <br />The DataNodes also perform block creation, deletion, and replication upon instruction from the NameNode.
+                </li>
+                <li>
+                    The NameNode always instructs DataNode for storing the Data. DataNode is a program that runs on the slave system that serves the read/write request from the client.
+                </li>
+                <li>
+                    <p>Starting of DataNode</p>
+                    <pre>hadoop-daemon.sh start datanode</pre>
+                </li>
+                <li>
+                    <p>Stopping of DataNode</p>
+                    <pre>hadoop-daemon.sh stop datanode</pre>
+                </li>
+            </ul>
+        </section>
+        <section id="secondary-namenode" class="text-amber">
+            <h3 class="text-xl underline">Secondary NameNode: </h3>
+            <ul class="list-item list-disc text-lg font-light text-amber-50">
+                <li>
+                    <span class="underline">Secondary NameNode</span> is used for taking the hourly backup of the data. In case the Hadoop cluster fails, or crashes, the secondary Namenode will take the hourly backup or checkpoints of that data and store this data into a file name fsimage. <br /> This file then gets transferred to a new system. A new MetaData is assigned to that new system and a new Master is created with this MetaData, and the cluster is made to run again correctly.
+                </li>
+                <li>
+                    This file then gets transferred to a new system. A new MetaData is assigned to that new system and a new Master is created with this MetaData, and the cluster is made to run again correctly.
+                </li>
+            </ul>
+            <div id="picture" class="w-fit">
+                <Image
+                    src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200820173200/secondary-namenode.png",
+                    alt="HDFS Architecture"
+                    loading="lazy"
+                    layout="full-width"
+                    inferSize
+                    class="brightness-75"
+                />
+            </div>
+        </section>
+        <section id="features" class="text-amber-50">
+            <h3 class="underline text-xl justify-start text-start">Features:</h3>
+            <ul class="list-disc list-item">
+                <li>
+                    <p class="text-lg">
+                        <span class="underline">Hardware Tolerant: </span> <br />
+                        Hardware failure is the norm rather than the exception. An HDFS instance may consist of hundreds or thousands of server machines, each storing part of the file system’s data. The fact that there are a huge number of components and that each component has a non-trivial probability of failure means that some component of HDFS is always non-functional. Therefore, detection of faults and quick, automatic recovery from them is a core architectural goal of HDFS.
+                    </p>
+                </li>
+                <li>
+                    <p class="text-lg">
+                        <span class="underline">Large Data Sets: </span> <br />
+                        Applications that run on HDFS have large data sets. A typical file in HDFS is gigabytes to terabytes in size. Thus, HDFS is tuned to support large files. It should provide high aggregate data bandwidth and scale to hundreds of nodes in a single cluster. It should support tens of millions of files in a single instance.                </p>
+                </li>
+                <li>
+                    <p class="text-lg">
+                        <span class="underline">Simple Coherency Model: </span> <br />
+                        HDFS applications need a write-once-read-many access model for files. A file once created, written, and closed need not be changed except for appends and truncates. Appending the content to the end of the files is supported but cannot be updated at arbitrary point. This assumption simplifies data coherency issues and enables high throughput data access
+                    </p>
+                </li>
+                <li>
+                    <p class="text-lg">
+                        <span class="underline">Portability: </span> <br />
+                        HDFS has been designed to be easily portable from one platform to another
+                    </p>
+                </li>
+            </ul>
+        </section>
+        <section id="data-replication" class="text-amber-50">
+            <h3 class="text-xl underline">Data Replication: </h3>
+            <ul class="list-item list-disc text-lg font-light text-amber-50">
+                <li>
+                    HDFS is designed to reliably store very large files across machines in a large cluster. It stores each file as a sequence of blocks. The blocks of a file are replicated for fault tolerance. The block size and replication factor are configurable per file.
+                </li>
+                <li>
+                    All blocks in a file except the last block are the same size, while users can start a new block without filling out the last block to the configured block size after the support for variable length block was added to append and hsync.
+                </li>
+                <li>
+                    The NameNode makes all decisions regarding replication of blocks. It periodically receives a Heartbeat and a Blockreport from each of the DataNodes in the cluster. Receipt of a Heartbeat implies that the DataNode is functioning properly. A Blockreport contains a list of all blocks on a DataNode.
+                </li>
+            </ul>
+            <div id="picture" class="w-fit">
+                <Image
+                    src="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsdatanodes.png",
+                    alt="Data Replications"
+                    loading="lazy"
+                    layout="full-width"
+                    inferSize
+                    class="brightness-75"
+                />
+            </div>
+        </section>
+        <section id="communication" class="text-amber-50">
+            <h3 class="text-xl underline">Communication:</h3>
+            <ul class="list-item list-disc text-lg font-light text-amber-50">
+                <li>
+                    All HDFS communication protocols are layered on top of the TCP/IP protocol
+                </li>
+                <li>
+                    A client establishes a connection to a configurable TCP port on the NameNode machine. It talks the ClientProtocol with the NameNode
+                </li>
+                <li>
+                    The DataNodes talk to the NameNode using the DataNode Protocol. A Remote Procedure Call (RPC) abstraction wraps both the Client Protocol and the DataNode Protocol.
+                </li>
+            </ul>
+        </section>
+    </section>
+    <section id="map-reduce" class="flex flex-col items-center justify-center p-6 mt-8">
+        <section id="overview">
+            <h1 class="text-2xl font-bold mb-4 underline text-left">MapReduce</h1>
+            <h3 class="text-xl underline">Overview: </h3>
+            <p class="text-lg mb-4 text-amber-50">
+                MapReduce is the processing engine of Hadoop. While HDFS is responsible for storing massive amounts of data, MapReduce handles the actual computation and analysis.  It provides a simple yet powerful programming model that allows developers to process large datasets in a distributed and parallel manner. It is a two-phase data processing model in Hadoop
+            </p>
+            <div id="picture" class="w-fit">
+                <Image
+                    src="https://media.geeksforgeeks.org/wp-content/uploads/20230523164846/mapreduce-workflow-768.png",
+                    alt="MapReduce Architecture"
+                    loading="lazy"
+                    layout="full-width"
+                    inferSize
+                    class="brightness-75"
+                />
+            </div>
+        </section>
+        <section id="code" class="text-amber-50 flex flex-col items-center justify-center p-6 mt-8">
+            <h3 class="text-xl underline">Code: </h3>
+            <CodeBlock code={map_reduce_code} language="java" />
+        </section>
+    </section>
+</Layout>
