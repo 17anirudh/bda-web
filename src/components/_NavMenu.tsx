@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@components/_avatar.tsx";
 import { Button } from "@components/_button.tsx";
 import type { KeyboardEvent } from "react";
 import { MenuIcon } from "lucide-react";
-import { navItems, handleKeyDown } from "@/helper";
+import { navItems } from "@/helper";
 
 export default function NavMenu() {
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>): void {
