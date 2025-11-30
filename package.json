@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
+    "@astrojs/netlify": "^6.6.3",
     "@astrojs/react": "^4.4.2",
     "@astrojs/ts-plugin": "^1.10.6",
     "@lucide/astro": "^0.555.0",
