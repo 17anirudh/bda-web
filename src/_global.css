@@ -12,6 +12,18 @@
   text-align: center;
   width: 100vw;
 }
+h1,
+h2,
+p {
+  color: #fff;
+}
+h3,
+h4 {
+  color: royalblue;
+}
+ul {
+  text-align: left;
+}
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);

@@ -1,0 +1,232 @@
+---
+import Layout from "./layout.astro";
+import { Image } from "astro:assets";
+---
+<style>
+strong {
+    color: red;
+}
+</style>
+
+<Layout title="Big Data">
+    <section id="landing" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <div class="prose lg:prose-xl center min-w-screen p-5  text-white">
+            <h1>Big Data</h1>
+            <div id="logo">
+                <Image
+                  src="https://www.projectcontrolacademy.com/wp-content/uploads/2020/09/Screenshot_4.png"
+                  alt="Big Data"
+                  inferSize
+                  layout="full-width"
+                  priority
+                />
+            </div>
+        </div>
+    </section>
+    <section id="introduction" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <!-- Traditional data -->
+        <h2>Traditional Data</h2>
+        <ul>
+            <li>Traditional data is the structured data that is being majorly maintained by all types of businesses starting from very small to big organizations.</li>
+            <li>It  is the kind of information that is easy to organize and store in simple databases, like spreadsheets or small computer systems. This could be things like customer names, phone numbers, or sales records.</li>
+            <li>In a traditional database system, a centralized database architecture is used to store and maintain the data in a fixed format or fields in a file managed using SQL.</li>
+        </ul>
+        <!-- Unstructured data -->
+        <h2>Unstructured Data</h2>
+        <ul>
+            <li>Unstructured data refers to information that does not have a predefined format or structure. It is messy, unorganized and hard to sort.</li>
+            <li>Unlike structured data, which is organized into rows and columns (like an Excel sheet), unstructured data comes in many different forms such as text documents, images, audio files, videos and social media posts</li>
+            <li>Because this type of data does not follow a clear pattern, it’s harder to store, process and search.</li>
+            <li>
+                <h4>Characters</h4>
+                <ul>
+                    <li>Lack of Format: Unstructured data does not fit neatly into tables or databases.</li>
+                    <li>Variety: This type of data can include a wide range of formats</li>
+                    <li>Volume: Unstructured data is often larger in volume compared to structured data.</li>
+                </ul>
+            </li>
+            <li>
+                <h4>Challenges</h4>
+                <ul>
+                    <li>Hard to Store: Since unstructured data comes in so many different formats, it takes up a lot of space to store</li>
+                    <li>Difficult to Search: Without labels or organization, it’s hard to find specific information in unstructured data.</li>
+                    <li>Hard to Analyze: Unlike structured data, which is easy to analyze using simple tools, unstructured data requires special software and complex techniques to make sense of it.</li>
+                </ul>
+            </li>
+            <li>
+                <table><thead><tr><th><span>Feature</span></th><th><b><strong>Structured Data</strong></b></th><th><b><strong>Unstructured Data</strong></b></th></tr></thead><tbody><tr><th><b><strong>Format</strong></b></th><td><span>Organized in rows and columns (e.g., tables, spreadsheets).</span></td><td><span>No fixed format or predefined structure.</span></td></tr><tr><th><b><strong>Examples</strong></b></th><td><span>Names, ages and addresses in a database.</span></td><td><span>Photos, videos, emails, social media posts.</span></td></tr><tr><th><b><strong>Storage</strong></b></th><td><span>Stored in relational databases (e.g., SQL).</span></td><td><span>Stored in files, cloud storage, or NoSQL databases.</span></td></tr><tr><th><b><strong>Ease of Analysis</strong></b></th><td><span>Easy to search, sort and analyze with tools.</span></td><td><span>Requires advanced processing (e.g., NLP, image recognition).</span></td></tr><tr><th><b><strong>Data Type</strong></b></th><td><span>Text and numbers in a predictable format.</span></td><td><span>Mixed data types: text, audio, video, etc.</span></td></tr><tr><th><b><strong>Real-World Analogy</strong></b></th><td><span>A neatly arranged bookshelf with categorized books.</span></td><td><span>A scattered pile of books, photos, papers and sticky notes.</span></td></tr></tbody></table>
+            </li>
+        </ul>
+        <!-- Crowd Sourcing analytics -->
+        <h2>
+            Crowd Sourcing Analytics
+        </h2>
+        <ul>
+            <li>Crowdsourcing analytics involves leveraging the collective intelligence of large groups to gather insights, solve problems, and enhance decision-making processes more efficiently than traditional methods.</li>
+            <li>This approach allows organizations to tap into diverse perspectives and skills, leading to more comprehensive insights and innovative solutions. The process typically involves:</li>
+            <li>This process involves:</li>
+            <ul>
+                <li>Defining specific tasks that require input from the crowd.</li>
+                <li>Distributing these tasks to a large group of participants, often through online platforms.</li>
+                <li>Aggregating and analyzing the submitted data to derive valuable insights.</li>
+            </ul>
+        </ul>
+    </section>
+    <section id="big-data" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <h1>Big Data</h1>
+        <div id="logo">
+            <Image
+              src="https://lh3.googleusercontent.com/rahLpi6rdSQPda3TvQm3DbnDusRjQQPICKbTWc4mt2LVYsHzM78FOM3l8eDZUkXPBfP9V5o9cyzekSk6STPNjXkthZAv1hTNfvGGLMNlEUfO96Xn1ISlhdFO1-6oVAVkSYbkdIZu"
+              alt="Big Data Characters"
+              inferSize
+              layout="full-width"
+              class="h-[40%]"
+            />
+        </div>
+        <!-- Overview -->
+        <h2>Overview</h2>
+        <ul>
+            <li>Big Data refers to vast and rapidly growing volumes of data that are too large and complex for traditional data processing tools to manage. </li>
+            <li>This data comes in many forms structured (e.g., tables), semi-structured (e.g., JSON, XML), and unstructured (e.g., text, images, video).</li>
+            <li>With the explosion of devices, sensors, online services, and digital platforms, data is now generated at an unprecedented rate. This growth makes it essential for organizations to adopt advanced tools and technologies to capture, store, analyze, and utilize this data effectively.</li>
+        </ul>
+        <!-- 5 V's -->
+        <h2>5 V's (or Characteristics)</h2>
+        <ul>
+            <li>
+                <h4>Volume</h4>
+                <ul class="max-w-screen">
+                    <li>The name ‘Big Data’ itself is related to a size which is enormous. Volume is a huge amount of data.</li>
+                    <li>To determine the value of data, size of data plays a very crucial role. If the volume of data is very large, then it is actually considered as a ‘Big Data’. </li>
+                    <li>
+                        <pre class="text-wrap">Example: In the year 2016, the estimated global mobile traffic was 6.2 Exabytes (6.2 billion GB) per month. Also, by the year 2020 we will have almost 40000 Exabytes of data.
+                        </pre>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>Velocity</h4>
+                <ul class="max-w-screen">
+                    <li>Velocity refers to the high speed of accumulation of data.</li>
+                    <li>In Big Data velocity data flows in from sources like machines, networks, social media, mobile phones etc. There is a massive and continuous flow of data.</li>
+                    <li>
+                        <pre class="text-wrap">Example: There are more than 3.5 billion searches per day are made on Google. Also, Facebook users are increasing by 22%(Approx.) year by year.
+                        </pre>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>Vareity</h4>
+                <ul class="max-w-screen">
+                    <li>It refers to nature of data that is structured, semi-structured and unstructured data. It also refers to heterogeneous sources.</li>
+                    <li>Variety is basically the arrival of data from new sources that are both inside and outside of an enterprise. It can be structured, semi-structured and unstructured.</li>
+                </ul>
+            </li>
+            <li>Variety: The diversity of data types and formats.</li>
+            <li>Value: Not all data is useful, the potential value that can be extracted from the data.</li>
+        </ul>
+        <h3>Big Data technologies</h3>
+        <div id="logo">
+            <Image
+              src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20210412131257/Popular-Big-Data-Technologies.jpg"
+              alt="BD Technologies"
+              inferSize
+              layout="full-width"
+            />
+        </div>
+        <ul class="item-list list-none">
+            <li>
+                <h4>Apache Cassandra</h4>
+                <ul>
+                    <li>
+                        It is one of the No-SQL databases which is highly scalable and has high availability. In this, we can replicate data across multiple data centers.
+                    </li>
+                    <li>
+                        Replication across multiple data centers is supported.
+                    </li>
+                    <li>
+                         In Cassandra, fault tolerance is one of the big factors in which failed nodes can be easily replaced without any downtime.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>Apache Hadoop</h4>
+                <ul>
+                    <li>
+                        Hadoop is one of the most widely used big data technology that is used to handle large-scale data, large file systems by using Hadoop file system which is called HDFS, and parallel processing like features using the MapReduce framework of Hadoop.
+                    </li>
+                    <li>
+                        Hadoop is a scalable system that helps to provide a scalable solution capable of handling large capacities and capabilities.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>Apache Hive</h4>
+                <ul>
+                    <li>
+                         It is used for data summarization and ad hoc querying which means for querying and analyzing Big Data easily.
+                    </li>
+                    <li>
+                        It is built on top of Hadoop for providing data summarization, ad-hoc queries, and the analysis of large datasets using SQL-like language called HiveQL.
+                    </li>
+                    <li>
+                        It has many features like: designed for OLAP, SQL type language called HiveQL, fast, scalable, and extensible.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>Apache Flume</h4>
+                <ul>
+                    <li>It is a distributed and reliable system that is used to collect, aggregate, and move large amounts of log data from many data sources toward a centralized data store.</li>
+                </ul>
+            </li>
+            <li>
+                <h4>Apache Spark</h4>
+                <ul>
+                    <li>
+                        The main objective of spark for speeding up the Hadoop computational computing software process, and It was introduced by Apache Software Foundation.
+                    </li>
+                    <li class="underline">
+                        The Main idea to implement Spark with Hadoop in two ways is, Spark uses Hadoop for storage purposes just because Spark has its own cluster management computation
+                    </li>
+                    <li>
+                        It includes interactive queries and stream processing, and in-memory cluster computing is one of the key features.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>Apache Kafka</h4>
+                <ul>
+                    <li>
+                        It is a distributed publish-subscribe messaging system and more specifically you can say it has a robust queue that allows you to handle a high volume of data, and you can pass the messages from one point to another as you can say from one sender to receiver.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>MongoDB</h4>
+                <ul>
+                    <li>
+                        It is based on cross-platform and works on a concept like collection and document. It has document-oriented storage that means data will be stored in the form of JSON form.
+                    </li>
+                    <li>
+                        It can be an index on any attribute. It has features like high availability, replication, rich queries, support by MongoDB, Auto-Sharding, and Fast in-place updates.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>ElasticSearch</h4>
+                <ul>
+                    <li>
+                        It is a real-time distributed system, and open-source full-text search and analytics engine.
+                    </li>
+                    <li>
+                         It has features like scalability factor is high and scalable structured and unstructured data up to petabytes, It can be used as a replacement of MongoDB, RavenDB which is based on document-based storage.
+                    </li>
+                    <li>
+                        If you see the real use case then it is an enterprise search engine and big organizations using it, for example- Wikipedia, GitHub.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</Layout>
