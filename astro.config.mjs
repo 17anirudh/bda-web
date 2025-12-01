@@ -17,6 +17,8 @@ export default defineConfig({
       "projectcontrolacademy.com",
       "i.pinimg.com",
       "lh3.googleusercontent.com",
+      "i.ytimg.com",
+      "tutorialspoint.com",
     ],
     remotePatterns: [{ protocol: "https" }],
   },
