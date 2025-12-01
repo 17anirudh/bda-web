@@ -349,11 +349,11 @@ const ids: string[] = ['#overview', '#paradigms', '#hdfs', '#map-reduce', '#yarn
         </div>
         <!-- Code -->
         <h3>Code: </h3>
-        <div class="prose lg:prose-xl">
+        <div class="prose lg:prose-xl max-w-screen">
             <Button variant="secondary" size="icon-sm" id="copy-code" className="relative top-0 right-0">
                 <CopyIcon />
             </Button>
-            <pre class="text-left relative top-0 right-0">
+            <pre class="text-left relative top-0 right-0 max-w-fit text-wrap">
                 {map_reduce_code}
             </pre>
         </div>
