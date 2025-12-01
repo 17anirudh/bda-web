@@ -1,9 +1,20 @@
 ---
 import Layout from './layout.astro';
 import { Image } from 'astro:assets';
-import { CodeBlock } from '@components/_code-block.tsx';
+import { CopyIcon } from '@lucide/astro';
 import { map_reduce_code } from '@/helper';
+import { Button } from '@/lib/components/ui/_button';
+import { LinkIcon } from '@lucide/astro';
+const ids: string[] = ['#overview', '#paradigms', '#hdfs', '#map-reduce', '#yarn', '#hadoop-io'];
 ---
+
+<script>
+  import { map_reduce_code } from '@/helper';
+  const copyBtn = document.getElementById('copy-code');
+  copyBtn?.addEventListener('click', () => {
+    navigator.clipboard.writeText(map_reduce_code);
+  });
+</script>
 
 <style>
     h1, h2, p {
@@ -16,7 +27,16 @@ import { map_reduce_code } from '@/helper';
 
 <Layout title="Hadoop">
     <section id="overview" class="prose lg:prose-xl center min-w-screen p-5  text-white">
-        <div class="flex">
+        <div class="flex items-center justify-center flex-wrap">
+            {ids.map((id) => (
+                <Button variant="link">
+                    <a href={id} class="text-blue-500 hover:text-blue-700 flex items-center justify-center flex-wrap">
+                        {id.replace('#', '')}<LinkIcon />
+                    </a>
+                </Button>
+            ))}
+        </div>
+        <div class="flex items-center justify-center flex-wrap">
             <h1>Apache Hadoop</h1>
             <div id="logo">
                 <Image
@@ -28,27 +48,6 @@ import { map_reduce_code } from '@/helper';
                 />
             </div>
         </div>
-        <!-- <div>
-            <Carousel client:visible>
-                <CarouselContent>
-                    {hadoopImages.map((item) => {
-                    return (
-                        <CarouselItem>
-                            <div class="p-2">
-                                <img
-                                    src={item.src},
-                                    alt={item.alt},
-                                    loading="lazy"
-                                />
-                            </div>
-                        </CarouselItem>
-                    );
-                    })}
-                </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-        </div> -->
     </section>
     <section id="paradigms" class="prose lg:prose-xl center min-w-screen p-5  text-white">
         <!-- OSS -->
@@ -229,6 +228,33 @@ import { map_reduce_code } from '@/helper';
                 class="brightness-75"
             />
         </div>
+        <!-- Block Size -->
+        <h3>Block Size: </h3>
+        <ul class="text-left">
+            <li>
+                HDFS is used in Hadoop to store the data means all of our data is stored in HDFS. Hadoop is also known for its efficient and reliable storage technique.
+            </li>
+            <li>
+                By default in Hadoop1, these blocks are 64MB in size, and in Hadoop2 these blocks are 128MB in size which means all the blocks that are obtained after dividing a file should be 64MB or 128MB
+            </li>
+            <li>
+                By default in Hadoop1, these blocks are 64MB in size, and in Hadoop2 these blocks are 128MB
+            </li>
+            <li>
+                Suppose you have uploaded a file of 400MB to your HDFS then what happens is, this file got divided into blocks of 128MB + 128MB + 128MB + 16MB = 400MB size. Means 4 blocks are created each of 128MB
+            </li>
+        </ul>
+        <!-- Block Size Image -->
+        <div id="picture" class="w-fit">
+            <Image
+                src="https://media.geeksforgeeks.org/wp-content/uploads/20200618125555/3164-1-768x359.png",
+                alt="Data Replications"
+                loading="lazy"
+                layout="full-width"
+                inferSize
+                class="brightness-75"
+            />
+        </div>
         <!-- Features -->
         <h3>Features:</h3>
         <ul class="text-left">
@@ -278,8 +304,8 @@ import { map_reduce_code } from '@/helper';
                 class="brightness-75"
             />
         </div>
-        <!-- Internal Communication -->
-        <h3>Communication:</h3>
+        <!-- Inter Process Communication -->
+        <h3>Inter ProcessCommunication:</h3>
         <ul class="text-left">
             <li>
                 All HDFS communication protocols are layered on top of the TCP/IP protocol
@@ -292,17 +318,28 @@ import { map_reduce_code } from '@/helper';
             </li>
         </ul>
     </section>
-    <section id="map-reduce" class="prose lg:prose-xl center mt-8  min-w-screen p-5">
+    <section id="map-reduce" class="prose lg:prose-xl center min-w-screen p-5  text-white">
         <h1 class="underline">MapReduce</h1>
         <!-- Overview -->
         <h3>Overview: </h3>
-        <p>
-            MapReduce is the processing engine of Hadoop. While HDFS is responsible for storing massive amounts of data, MapReduce handles the actual computation and analysis.  It provides a simple yet powerful programming model that allows developers to process large datasets in a distributed and parallel manner. It is a two-phase data processing model in Hadoop
-        </p>
+        <ul class="text-left">
+            <li>
+                MapReduce is a programming model and an associated implementation for processing and generating large data sets with a parallel, distributed algorithm on a cluster. It is designed to handle big data by dividing the task into smaller sub-tasks, which are processed in parallel across multiple nodes in a cluster.
+            </li>
+            <li>
+                Hadoop MapReduce is a software framework for easily writing applications which process vast amounts of data (multi-terabyte data-sets) in-parallel on large clusters (thousands of nodes) of commodity hardware in a reliable, fault-tolerant manner.
+            </li>
+            <li>
+                A MapReduce job usually splits the input data-set into independent chunks which are processed by the map tasks in a completely parallel manner. The framework sorts the outputs of the maps, which are then input to the reduce tasks. Typically both the input and the output of the job are stored in a file-system. The framework takes care of scheduling tasks, monitoring them and re-executes the failed tasks.
+            </li>
+            <li>
+
+            </li>
+        </ul>
         <!-- MapReduce Architecture -->
         <div id="picture" class="w-fit">
             <Image
-                src="https://media.geeksforgeeks.org/wp-content/uploads/20230523164846/mapreduce-workflow-768.png",
+                src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200908123810/MapReduce-Architecture.jpg",
                 alt="MapReduce Architecture"
                 loading="lazy"
                 layout="full-width"
@@ -312,8 +349,113 @@ import { map_reduce_code } from '@/helper';
         </div>
         <!-- Code -->
         <h3>Code: </h3>
-        <div>
-            <CodeBlock code={map_reduce_code} language="java" className="max-w-screen text-left" />
+        <div class="prose lg:prose-xl">
+            <Button variant="secondary" size="icon-sm" id="copy-code" className="relative top-0 right-0">
+                <CopyIcon />
+            </Button>
+            <pre class="text-left relative top-0 right-0">
+                {map_reduce_code}
+            </pre>
         </div>
+        <!-- Map Phase -->
+        <h3>Map Phase</h3>
+        <ul class="text-left">
+            <li>The input dataset is divided into splits, each processed by a Map Task on the node storing the data (ensuring data locality).</li>
+            <li>A RecordReader converts raw input into (key, value) pairs, which the Mapper transforms into intermediate results (e.g., "Hello Hadoop" → (Hello, 1), (Hadoop, 1)).</li>
+            <li>The Map Phase generates but does not aggregate data.</li>
+        </ul>
+        <!-- Shuffle & Sort Phase -->
+        <h3>Shuffle & Sort Phase</h3>
+        <ul class="text-left">
+            <li>After mapping, the intermediate outputs are reorganized so they can be processed efficiently by reducers. Shuffling groups identical keys, e.g., (Hadoop, 1), (Hadoop, 1), (Hadoop, 1) becomes (Hadoop, [1,1,1]).</li>
+            <li>Sorting then arranges the keys in order. This stage ensures balanced distribution of work and is essential for linking the Map and Reduce phases.</li>
+        </ul>
+        <!-- Reduce Phase -->
+        <h3>Reduce Phase</h3>
+        <ul class="text-left">
+            <li>
+                Finally, reducers take the grouped keys and their associated values from the Shuffle & Sort stage.
+            </li>
+            <li>The reduce() function aggregates or summarizes them to produce the final output. For example, (Hadoop, [1,1,1]) becomes (Hadoop, 3). The consolidated results are written back into HDFS at the client-specified output location.</li>
+        </ul>
+        <!-- MapReduce DataFlow -->
+        <div id="picture" class="w-fit">
+            <Image
+                src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200729213509/Hadoop-MapReduce-Data-Flow.png",
+                alt="MapReduce Data Flow"
+                loading="lazy"
+                layout="full-width"
+                inferSize
+                class="brightness-75"
+            />
+        </div>
+        <!-- Job Tracker -->
+        <h3>Job Tracker</h3>
+        <ul class="text-left">
+            <li>JobTracker is an essential Daemon for MapReduce execution, it process runs on a separate node and not usually on a DataNode.</li>
+            <li>JobTracker receives the requests for MapReduce execution from the client, talks to the NameNode to determine the location of the data.</li>
+            <li>JobTracker monitors the individual TaskTrackers and the submits back the overall status of the job back to the client.</li>
+        </ul>
+        <!-- Task Tracker -->
+        <h3>Task Tracker</h3>
+        <ul class="text-left">
+            <li>
+                TaskTracker runs on DataNode. Mostly on all DataNodes, is replaced by Node Manager in MRv2
+            </li>
+            <li>Mapper and Reducer tasks are executed on DataNodes administered by TaskTrackers.</li>
+        </ul>
+    </section>
+    <section id="yarn" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <h1 class="underline">Yet Another Resource Manager (YARN)</h1>
+        <!-- Overview -->
+        <h3>Overview: </h3>
+        <ul class="text-left">
+            <li>
+                YARN is resource manager layer in Hadoop ecosystem.
+            </li>
+            <li>
+                The fundamental idea of YARN is to split up the functionalities of resource management and job scheduling/monitoring into separate daemons. The idea is to have a global ResourceManager (RM) and per-application ApplicationMaster (AM)
+            </li>
+        </ul>
+        <!-- YARN Flow -->
+        <div id="picture" class="w-fit">
+            <Image
+                src="https://media.geeksforgeeks.org/wp-content/uploads/HadoopYarn.jpg",
+                alt="YARN Flow"
+                loading="lazy"
+                layout="full-width"
+                inferSize
+                class="brightness-75"
+            />
+        </div>
+    </section>
+    <section id="hadoop-io" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <h1 class="underline">Hadoop IO</h1>
+        <!-- Overview -->
+        <h3>Overview: </h3>
+        <ul class="text-left">
+            <li>
+                Hadoop Comes with a set of primitives for data  I/O.
+            </li>
+            <li>
+                Fundamental idea of Hadoop is big data processing, hence it is designed for massive data processing, provides a set of APIs for reading and writing data.
+            </li>
+        </ul>
+        <!-- Data Integrity -->
+        <h3>Data Integrity</h3>
+        <ul class="text-left">
+            <li>In Hadoop, data integrity is crucial for ensuring the accuracy and reliability of large datasets.</li>
+            <li>
+                Given the distributed nature of Hadoop, data integrity is maintained through a combination of checksums, replication, and fault tolerance mechanisms.
+            </li>
+            <li>CRC 32 is typically used for error detection in Hadoop. Computed when data is written and verified during read operations.</li>
+        </ul>
+        <!-- Compressions -->
+        <h3>Data Compression</h3>
+        <ul class="text-left">
+            <li>GZIP: Good compression ratio, slow, unsplitable, widely used for general purposes.</li>
+            <li>BZIP2: Parallel, Splitable, higher compression ratio than GZIP but slower</li>
+            <li>LZO, LZ4 and Snappy: Lower compression ratio than GZIP and BZIP2, optimized for speed and low memory usage. LZO and Snappy are splittable</li>
+        </ul>
     </section>
 </Layout>
