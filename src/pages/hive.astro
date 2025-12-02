@@ -1,0 +1,612 @@
+---
+import Layout from './layout.astro';
+import { Image } from 'astro:assets';
+import {
+  complex,
+  tablehql,
+  externalTableHql,
+  partTable,
+  bucketTable,
+  query,
+  partitionQuery,
+  bucketQuery } from '@/helper';
+---
+<style>
+    strong {
+        color: red;
+    }
+    ul#hql-table > li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    ul#hql-table > li > pre {
+        text-wrap: wrap;
+    }
+</style>
+
+<Layout title="Hive">
+    <section id="landing" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <div class="flex items-center justify-center flex-wrap">
+            <h1>Apache Hive</h1>
+            <div id="logo">
+                <Image
+                  src="https://hive.apache.org/images/hive.svg"
+                  alt="Apache Hive Logo"
+                  width={90}
+                  height={90}
+                  priority
+                />
+            </div>
+        </div>
+    </section>
+    <section id="architecture" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <h1>Overview</h1>
+        <!-- Overview -->
+        <h2>Overview</h2>
+        <ul>
+            <li>
+                Apache Hive is a distributed, fault-tolerant data warehouse system that enables analytics at a massive scale.
+            </li>
+            <li>
+                A data warehouse provides a central store of information that can easily be analyzed to make informed, data driven decisions. Hive allows users to read, write, and manage petabytes of data using SQL.
+            </li>
+            <li>
+                Hive is built on top of Apache Hadoop, which is an open-source framework used to efficiently store and process large datasets.
+            </li>
+            <li>
+                As a result, Hive is closely integrated with Hadoop, and is designed to work quickly on petabytes of data.
+            </li>
+            <li>
+                Hive transforms HiveQL queries into MapReduce or Tez jobs that run on Apache Hadoop’s distributed job scheduling framework, Yet Another Resource Negotiator (YARN).
+            </li>
+            <li>It abstracts the complexity of writing MapReduce code by allowing users to interact with structured data through familiar query syntax.</li>
+        </ul>
+        <!-- Architecture -->
+        <h2>Architecture</h2>
+        <div id="logo">
+            <Image
+              src="https://media.geeksforgeeks.org/wp-content/uploads/20250802122531024575/hive_architecture.webp"
+              alt="Hive Architecture"
+              inferSize
+              layout="full-width"
+              loading="lazy"
+            />
+        </div>
+        <ul>
+            <li>
+                UI: CLI (Command Line Interface), Hive Web UI, JDBC, and ODBC are provided for users to submit HiveQL queries, it accepts queries and passes them to the Driver for processing.
+            </li>
+            <li>
+                Driver: Manages the lifecycle of a HiveQL query, coordinates query execution by interacting with the compiler, optimizer, and execution engine.
+            </li>
+            <li>
+                Compiler: Converts HiveQL into execution plans, breaks down the query into a DAG of MapReduce/Tez/Spark jobs.
+            </li>
+            <li>
+                Metastore: Stores metadata information backed by RDBMS and crucial for managing the schema-on-read behavior of Hive.
+            </li>
+            <li>
+                Execution Engine: Executes the compiled query plan, orchestrates the execution of MapReduce/Tez/Spark jobs, and manages the data flow between them.
+            </li>
+        </ul>
+        <!-- File Formats -->
+        <h2>File Formats</h2>
+        <ul>
+            <li>
+                Text File Format: Stores data in plain text format, delimited by a specified character.
+            </li>
+            <li>
+                RCFile: Record Columnar File stores table data in a flat file consisting of binary key/value pairs, offers high row level compression
+            </li>
+            <li class="flex flex-row flex-wrap">
+                <div id="logo">
+                    <Image
+                      src="https://avro.apache.org/images/logo.svg"
+                      alt="Apache Avro Logo"
+                      width={30}
+                      height={30}
+                      loading="lazy"
+                    />
+                </div>
+                Apache Avro™ is the leading serialization format for record data, and first choice for streaming data pipelines. It offers excellent schema evolution, and has implementations for the JVM (Java, Kotlin, Scala, …), Python, C/C++/C#, PHP, Ruby, Rust, JavaScript, and even Perl.
+            </li>
+            <li>
+                ORC: Optimized Row Columnar File format that provides efficient storage and query performance for large datasets.
+            </li>
+            <li class="flex flex-row flex-wrap">
+                <div id="logo">
+                    <Image
+                      src="https://parquet.apache.org/favicons/favicon.ico"
+                      alt="Apache Parquet Logo"
+                      width={30}
+                      height={30}
+                      loading="lazy"
+                    />
+                </div>
+                Apache Parquet is an open source, column-oriented data file format designed for efficient data storage and retrieval. It provides high performance compression and encoding schemes to handle complex data in bulk and is supported in many programming languages and analytics tools.
+            </li>
+        </ul>
+    </section>
+    <section id="data-types" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <h1>Data Types</h1>
+        <!-- Types -->
+        <h2>Classification</h2>
+        <ul>
+            <li>Numerical: These data types are used to define the columns with integer variables.</li>
+            <li>Date/Time: These data types are used to define the columns with date and time variables.</li>
+            <li>Complex: These data types are used to define the columns with complex data types (nested structures).</li>
+        </ul>
+        <!-- Numerical -->
+        <h2>Numerical</h2>
+        <table>
+            <thead><tr><th><strong>Data type</strong></th><th><strong>Size</strong></th></tr></thead><tbody><tr><td>TINYINT - &nbsp;1 byte signed integer</td><td>-128 to 127</td></tr><tr><td>SMALLINT - '2 byte signed integer</td><td>-32, 768 to 32, 767</td></tr><tr><td>INT &nbsp;- 4 byte signed integer</td><td>–2,147,483,648 to 2,147,483,647&nbsp;</td></tr><tr><td>BIGINT &nbsp;- 8 byte signed integer'</td><td>9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td></tr><tr><td>FLOAT - 'Single precision floating point</td><td>Single Precision</td></tr><tr><td>DOUBLE - Double precision floating point</td><td>Double Precision</td></tr><tr><td>DECIMAL &nbsp;- Precise decimal type based on Java BigDecimal Object</td><td>Big Decimal</td></tr></tbody>
+        </table>
+        <ul id="hql-table">
+            <li>
+                <h4>BOOLEAN</h4>
+                <pre>CREATE TABLE geeksportal.geekdata(is_active BOOLEAN);</pre>
+            </li>
+            <li>
+                <h4>TINYINT</h4>
+                <pre>create table geeksportal.geekdata(college_id tinyint);</pre>
+            </li>
+            <li>
+                <h4>SMALLINT</h4>
+                <pre>create table geeksportal.geekdata(college_id smallint);</pre>
+            </li>
+            <li>
+                <h4>INT</h4>
+                <pre>create table geeksportal.geekdata(college_id int);</pre>
+            </li>
+            <li>
+                <h4>BIGINT</h4>
+                <pre>create table geeksportal.geekdata(phone_number bigint);</pre>
+            </li>
+            <li>
+                <h4>FLOAT</h4>
+                <pre>create table geeksportal.geekdata(college_id float);</pre>
+            </li>
+            <li>
+                <h4>DOUBLE</h4>
+                <pre>create table geeksportal.geekdata(college_id double);</pre>
+            </li>
+            <li>
+                <h4>DECIMAL</h4>
+                <pre>create table geeksportal.geekdata(college_id decimal);</pre>
+            </li>
+        </ul>
+        <!-- Text -->
+        <h2>String</h2>
+        <ul id="hql-table">
+            <li>
+                <h4>STRING: Dynamically adjusted length</h4>
+                <pre>CREATE TABLE geeksportal.geekdata(college_name STRING);</pre>
+            </li>
+            <li>
+                <h4>VARCHAR: Variable-length text with max size</h4>
+                <pre>CREATE TABLE geeksportal.geekdata(college_name VARCHAR(255));</pre>
+            </li>
+            <li>
+                <h4>CHAR: Fixed-length text with max size</h4>
+                <pre>CREATE TABLE geeksportal.geekdata(college_name CHAR(255));</pre>
+            </li>
+        </ul>
+        <!-- Date -->
+        <h2>Date and Time</h2>
+        <ul id="hql-table">
+            <li>
+                <h4>TIMESTAMP: Date + Time</h4>
+                <div class="flex flex-row flex-wrap">
+                    <p>By Deafult it is stored as:</p>
+                    <pre>yyyy-MM-dd HH:mm:ss</pre>
+                </div>
+                <pre>CREATE TABLE geeksportal.geekdata(last_updated TIMESTAMP);</pre>
+            </li>
+            <li>
+                <h4>DATE: Date only</h4>
+                <pre>CREATE TABLE geeksportal.geekdata(join_date DATE);</pre>
+            </li>
+        </ul>
+        <!-- Complex -->
+        <h2>Complex</h2>
+        <ul id="hql-table">
+            {complex.map((item)=> (
+              <li>
+                  <h4>{item.heading}: {item.description}</h4>
+                  <pre>{item.code}</pre>
+              </li>
+            ))}
+        </ul>
+    </section>
+    <section id="hql" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <!-- DDL -->
+        <h2>DDL</h2>
+        <ul id="hql-table">
+            <li>
+                <h4>Create database</h4>
+                <p>Databases in Hive are logical groupings of tables.</p>
+                <pre>CREATE DATABASE IF NOT EXISTS my_database;</pre>
+            </li>
+            <li>
+                <h4>Create table</h4>
+                <p>Tables are the fundamental units of data storage in Hive where you can define datatypes</p>
+                <pre>{tablehql}</pre>
+            </li>
+            <li>
+                <h4>External tables</h4>
+                <p>External Tables: You can create external tables that point to data located outside Hive's warehouse directory.</p>
+                <pre>{externalTableHql}</pre>
+            </li>
+            <li>
+                <h4>Partitioned tables</h4>
+                <p>Partitioned tables allow you to divide large tables into smaller, more manageable pieces based on specific columns.</p>
+                <pre>{partTable}</pre>
+            </li>
+            <li>
+                <h4>Bucketing tables</h4>
+                <p>Bucketing further optimizes queries by hashing column values into a fixed number of buckets, enabling faster sampling and joins.</p>
+                <pre>{bucketTable}</pre>
+            </li>
+            <li>
+                <h4>Altering tables</h4>
+                <p>Adding, dropping, or changing columns, renaming tables, and changing table properties.</p>
+                <pre>ALTER TABLE employees ADD COLUMNS (hire_date STRING);
+                    ALTER TABLE employees RENAME TO staff; </pre>
+            </li>
+            <li>
+                <h4>Dropping Tables and Databases</h4>
+                <pre>DROP TABLE IF EXISTS sales;
+                    DROP DATABASE IF EXISTS my_database CASCADE; </pre>
+            </li>
+        </ul>
+        <!-- DML -->
+        <h2>DML</h2>
+        <ul id="hql-table">
+            <li>
+                <h4>Loading data</h4>
+                <p>Load data into tables from local files or hdfs.</p>
+                <pre>LOAD DATA LOCAL INPATH '/path/to/local/file' INTO TABLE employees;
+                LOAD DATA INPATH '/path/to/hdfs/file' INTO TABLE employees;</pre>
+            </li>
+            <li>
+                <h4>Inserting data</h4>
+                <pre>INSERT INTO TABLE employees VALUES ('John', 'Doe', 30);
+                    INSERT INTO TABLE sales VALUES ('Product A', 100, 10); </pre>
+            </li>
+            <li>
+                <h4>Updating data</h4>
+                <p>Updating existing data in tables.</p>
+                <pre>UPDATE employees SET salary = 35 WHERE name = 'John';
+                    UPDATE sales SET quantity = 120 WHERE product = 'Product A'; </pre>
+            </li>
+            <li>
+                <h4>Deleting data</h4>
+                <p>Deleting data from tables.</p>
+                <pre>DELETE FROM employees WHERE name = 'John';
+                    DELETE FROM sales WHERE product = 'Product A'; </pre>
+            </li>
+        </ul>
+    </section>
+    <section id="joins" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <h2>Logical Joins</h2>
+        <div class="flex flex-row flex-wrap">
+            <div id="logo">
+                <Image
+                  src="https://images.tpointtech.com/hadooppages/images/hiveql-join.png"
+                  alt="Table 1"
+                  inferSize
+                  loading="lazy"
+                />
+            </div>
+            <div id="logo">
+                <Image
+                  src="https://images.tpointtech.com/hadooppages/images/hiveql-join2.png"
+                  alt="Table 2"
+                  inferSize
+                  loading="lazy"
+                />
+            </div>
+        </div>
+        <p>
+            Hive, a data warehousing infrastructure built on Hadoop, utilizes joins to combine data
+            from multiple tables, similar to SQL. The joins in Hive are primarily based on equality
+            conditions and are crucial for performing analytical queries on large datasets.
+        </p>
+        <ul id="hql-table">
+            <li>
+                <!-- Inner Join -->
+                <h2>Inner Join</h2>
+                <div id="logo">
+                    <Image
+                      src="https://www.w3schools.com/SQL/img_inner_join.png"
+                      alt="Inner Join"
+                      inferSize
+                      loading="lazy"
+                    />
+                </div>
+                <pre>SELECT A.empname, B.department_name
+                    FROM employees A
+                    INNER JOIN departments B
+                    ON A.empid = B.empid</pre>
+                <div id="logo">
+                    <Image
+                      src="https://images.tpointtech.com/hadooppages/images/inner-join-in-hiveql9.png"
+                      alt="Inner Join Result"
+                      inferSize
+                      loading="lazy"
+                    />
+                </div>
+            </li>
+            <li>
+                <!-- Left Outer Join -->
+                <h2>Left Outer Join</h2>
+                <div id="logo">
+                    <Image
+                      src="https://images.tpointtech.com/hadooppages/images/left-outer-join-in-hiveql.png"
+                      alt="Left Outer Join"
+                      inferSize
+                      loading="lazy"
+                    />
+                </div>
+                <pre>SELECT A.empname, B.department_name
+                    FROM employees A
+                    LEFT OUTER JOIN departments B
+                    ON A.empid = B.empid</pre>
+                <div id="logo">
+                    <Image
+                      src="https://images.tpointtech.com/hadooppages/images/left-outer-join-in-hiveql4.png"
+                      alt="Left Outer Join Result"
+                      inferSize
+                      loading="lazy"
+                    />
+                </div>
+            </li>
+            <li>
+                <!-- Right Outer Join -->
+                <h2>Right Outer Join</h2>
+                <div id="logo">
+                    <Image
+                      src="https://images.tpointtech.com/hadooppages/images/right-outer-join-in-hiveql.png"
+                      alt="Right Outer Join"
+                      inferSize
+                      loading="lazy"
+                    />
+                </div>
+                <pre>SELECT A.empname, B.department_name
+                    FROM employees A
+                    RIGHT OUTER JOIN departments B
+                    ON A.empid = B.empid</pre>
+                <div id="logo">
+                    <Image
+                      src="https://images.tpointtech.com/hadooppages/images/right-outer-join-in-hiveql4.png"
+                      alt="Left Outer Join Result"
+                      inferSize
+                      loading="lazy"
+                    />
+                </div>
+            </li>
+            <li>
+                <!-- Full Outer Join -->
+                <h2>Full Outer Join</h2>
+                <div id="logo">
+                    <Image
+                      src="https://images.tpointtech.com/hadooppages/images/full-outer-join-in-hiveql.png"
+                      alt="Full Outer Join"
+                      inferSize
+                      loading="lazy"
+                    />
+                </div>
+                <pre>SELECT A.empname, B.department_name
+                    FROM employees A
+                    FULL OUTER JOIN departments B
+                    ON A.empid = B.empid</pre>
+                <div id="logo">
+                    <Image
+                      src="https://images.tpointtech.com/hadooppages/images/right-outer-join-in-hiveql4.png"
+                      alt="Left Outer Join Result"
+                      inferSize
+                      loading="lazy"
+                    />
+                </div>
+            </li>
+        </ul>
+        <!-- Window functions -->
+        <h2>Window functions</h2>
+        <p>
+            HQL window functions, also known as analytic functions, enable performing
+            calculations across a set of related rows within a query result, similar to how they
+            function in standard SQL. They are crucial for advanced analytics in big data
+            environments like Hive, allowing for operations such as ranking, calculating running
+            totals, and retrieving data from preceding or succeeding rows without collapsing the
+            result set.
+        </p>
+        <ul class="list-none list-item">
+            <li>
+                <h3>Components</h3>
+                <ul>
+                    <li>WINDOW SPECIFICATION (OVER): This defines the "window" or set of rows over which the function operates.</li>
+                    <li>PARTITION BY: Divides the data into partitions based on specified columns.</li>
+                    <li>ORDER BY: Sorts the rows within each partition</li>
+                    <li>FRAME SPECIFICATION:  Defines the subset of rows within a partition that constitutes the current "frame" for the calculation. </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Types</h3>
+                <ul>
+                   	<li>Ranking Functions: ROW_NUMBER(), RANK(), DENSE_RANK(), NTILE(). These assign a rank or number to each row within a partition. </li>
+                   	<li>Analytic Functions: LAG(), LEAD(), FIRST_VALUE(), LAST_VALUE(). These retrieve
+                    values from other rows within the window, useful for time-series analysis or
+                    comparisons. </li>
+                   	<li>Aggregate Functions used as Window Functions: Standard aggregate functions
+                    like SUM(), AVG(), COUNT(), MIN(), MAX() can be used as window functions by including
+                    the OVER clause, allowing them to compute running totals, moving averages, etc. </li>
+                </ul>
+            </li>
+            <li>
+                <pre>{query}</pre>
+            </li>
+        </ul>
+        <!-- Join Strategies -->
+        <h3>Join Strategies</h3>
+        <p>
+            Hive join strategies in big data analytics include various optimization techniques to
+            efficiently join large datasets stored in HDFS, primarily using MapReduce-based
+            approaches. Key strategies include Common Joins, where data is shuffled to reducers,
+            and Map Joins (Map-Side Joins), which avoid shuffles by loading one table into memory
+            on each mapper. Bucket Joins are a specialized form of map join for bucketed tables,
+            while Skew Joins and Auto MapJoin are other advanced options to handle specific data
+            distribution and performance challenges
+        </p>
+        <ul id="hql-table">
+            <li>
+                <h3>Common Join</h3>
+                <ul>
+                    <li>This is the default and least efficient join type. During the Map phase, mappers read
+                    data blocks and send rows with the same join key to the same reducer during the
+                    Shuffle and Sort phase. </li>
+                    <li>
+                        Mappers read data from both tables - Records with the same join key are sent to the same reducer. -  Reducers join the records with matching keys.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Map Join</h3>
+                <ul>
+                    <li>
+                        This strategy aims to perform the join in the map phase itself, thus avoiding the costly
+                        shuffle and reduce operations.
+                    </li>
+                    <li>
+                        One table is loaded into memory on each mapper (as a "small table"), and the other
+                        table's data is streamed and joined locally.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Bucket Map Join</h3>
+                <ul>
+                    <li>
+                        This strategy is similar to Map Join, but it takes advantage of bucketing to further optimize the join process.
+                    </li>
+                    <li>
+                        Bucketing is a technique used to distribute data evenly across multiple files or partitions based on a hash function.
+                    </li>
+                    <li>
+                        By bucketing the data, the join operation can be performed more efficiently, as the data is already partitioned and distributed.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Auto Map Join</h3>
+                <ul>
+                    <li>
+                        Hive automatically detects if one of the tables is small enough for a map
+                        side join without an explicit hint.
+                    </li>
+                    <li>
+                        Hive's cost-based optimizer analyzes the query and automatically converts a
+                        standard join to a map join if it deems it beneficial.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Skew Join</h3>
+                <ul>
+                    <li>
+                        A strategy to address data skew, where some join keys have disproportionately high
+                        numbers of records, causing bottlenecks in the reduce phase.
+                    </li>
+                    <li>
+                        The join is split into smaller parts, with the heavily skewed keys handled differently,
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Bucket Sort Merge Map Join</h3>
+                <ul>
+                    <li>
+                        A more complex join strategy that optimizes the join of bucketed tables when they are
+                        large.
+                    </li>
+                    <li>
+                        It combines bucketing with sorting and merging, further improving the efficiency of
+                        joining large, bucketed tables.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="concepts" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <!-- Partitioning -->
+        <h2>Table Partitioning</h2>
+        <p>
+            Hive table partitioning is a technique used in Big Data analytics to organize data in a
+            way that improves query performance and manageability. It involves dividing a large
+            table into smaller, more manageable parts based on the values of one or more columns.
+        </p>
+        <ul>
+            <li>
+                PURPOSE: primary goal of partitioning is to avoid full table scans when querying data. By
+                partitioning, queries can be directed to specific partitions, reducing the amount of data
+                that needs to be processed and significantly improving query execution time.
+            </li>
+            <li>
+                MECHANISM: Hive stores partitioned data in separate directories within HDFS (Hadoop Distributed
+                File System).
+            </li>
+        </ul>
+        <h3>Types</h3>
+        <ul>
+            <li>
+                Static Partitioning: In static partitioning, the partition column values are explicitly
+                specified during data loading. This is suitable when the partition values are known
+                beforehand and are relatively stable.
+            </li>
+            <li>
+                Dynamic Partitioning: Dynamic partitioning automatically determines the partition
+                column values during data loading. This is beneficial when dealing with large datasets
+                or when the number of partitions is unknown or changes frequently. Dynamic
+                partitioning allows for more flexible data ingestion.
+            </li>
+        </ul>
+        <h3>Sample Code</h3>
+        <p>
+            Partitioned tables are created using the PARTITIONED BY clause in the CREATE
+            TABLE statement, specifying the partition columns and their data types.
+        </p>
+        <pre>{partitionQuery}</pre>
+        <!-- Bucketing -->
+        <h2>Table Bucketing</h2>
+        <p>
+            Hive bucketing is a data organization technique used in Apache Hive to optimize query
+            performance, particularly for large datasets. It involves dividing the data within a table
+            (or a partition of a table) into a fixed number of buckets based on the hash value of a
+            specified column.
+        </p>
+        <h3>Concepts</h3>
+        <ul>
+            <li>
+                HASH BASED DISTRIBUTION: Data is distributed across buckets based on a hash function applied to a chosen
+                column (the bucketing column).
+            </li>
+            <li>
+                CLUSTERED: When creating a bucketed table, the CLUSTERED BY clause is used to specify the
+                column(s) for bucketing and the number of buckets.
+                <pre>{bucketQuery}</pre>
+            </li>
+        </ul>
+    </section>
+    <section id="different" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <!-- HQL vs SQL -->
+        <table>
+            <thead><tr><th>On the basis of&nbsp;</th><th>SQL</th><th>HiveQL</th></tr></thead><tbody><tr><td>Update-commands in table structure</td><td>UPDATE, DELETE&nbsp;<br>INSERT,</td><td>UPDATE, DELETE&nbsp;<br>INSERT,</td></tr><tr><td>Manages</td><td>Relational data</td><td>Data Structures</td></tr><tr><td>Transaction</td><td>Supported</td><td>Limited Support Supported</td></tr><tr><td>Indexes</td><td>Supported</td><td>Supported</td></tr><tr><td>Data Types</td><td>It contain a total of five data types i.e., Integral, floating-point, fixed-point, text and binary strings, temporal</td><td>It contains &nbsp;Boolean, integral, floating-point, fixed-point, timestamp(nanosecond precision) , Date, text and binary strings, temporal, array, map, struct, Union</td></tr><tr><td>Functions</td><td>Hundreds of built-in functions</td><td>Hundreds of built-in functions</td></tr><tr><td>Mapreduce</td><td>Not Supported</td><td>Supported</td></tr><tr><td>Multitable inserts in table</td><td>Not supported</td><td>Supported</td></tr><tr><td>Create table...as Select</td><td>Not supported</td><td>Supported</td></tr><tr><td>Select command</td><td>Supported</td><td>Supported with SORT BY clause for partial ordering and LIMIT to restrict number of rows returned</td></tr><tr><td>Joins</td><td>Supported</td><td>Inner joins, outer joins, semi join, map joins, cross joins</td></tr><tr><td>Subqueries</td><td>Supported</td><td>Only Used in FROM, WHERE, or HAVING clauses</td></tr><tr><td>Views</td><td>Can be Updated</td><td>Read-only i.e. cannot be updated</td></tr></tbody>
+        </table>
+        <!-- Hive vs MapReduce -->
+        <table>
+            <thead><tr><th>S.No</th><th>MapReduce</th><th>Hive</th></tr></thead><tbody><tr><td>1.</td><td>It is a Data Processing Language.</td><td>It is a SQL-like Query Language.</td></tr><tr><td>2.</td><td>It converts the job into map-reduce functions.</td><td>It converts the SQL queries to HQL(Hive-QL)</td></tr><tr><td>3.</td><td>It provides low level of abstraction.</td><td>It provides a high level of abstraction.</td></tr><tr><td>4.</td><td>It is difficult for the user to perform join operations.</td><td>It makes it easy for the user to perform SQL-like operations on HDFS.</td></tr><tr><td>5.</td><td>The user has to write 10 times more lines of code to perform a similar task than Pig.</td><td>The user has to write a few lines of code than MapReduce.</td></tr><tr><td>6.</td><td>It has several jobs therefore execution time is more.</td><td>The code execution time is more but development effort is less.</td></tr><tr><td>7.</td><td>It is supported by versions of the Hadoop.</td><td>It is also supported with recent versions of Hadoop.</td></tr></tbody>
+        </table>
+    </section>
+</Layout>

@@ -235,3 +235,93 @@ export const map_reduce_code = `
       System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
   }`;
+
+interface c {
+  heading: string;
+  description: string;
+  code: string;
+}
+
+export const complex: c[] = [
+  {
+    heading: `ARRAY<T>`,
+    description: `Ordered list of elements of same type`,
+    code: `CREATE TABLE geeksportal.geekdata(subjects ARRAY<STRING>);`,
+  },
+  {
+    heading: `MAP<K,V>`,
+    description: `Key–value pairs like dictionary`,
+    code: `CREATE TABLE geeksportal.geekdata(subjects MAP<STRING,INT>);`,
+  },
+  {
+    heading: `STRUCT<V1:T1,V2:T2,...>`,
+    description: `Record with named fields (like a mini row)`,
+    code: `CREATE TABLE geeksportal.geekdata(subjects STRUCT<name:STRING,age:INT>);`,
+  },
+  {
+    heading: `UNIONTYPE<T1,T2,...>`,
+    description: `Holds one value from multiple defined types`,
+    code: `CREATE TABLE geeksportal.geekdata(subjects UNIONTYPE<STRING,INT>);`,
+  },
+];
+export const tablehql: string = `CREATE TABLE employees (
+        id INT,
+        name STRING,
+        salary DOUBLE,
+        department STRING
+      )
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    STORED AS AVRO; `;
+export const externalTableHql: string = `CREATE EXTERNAL TABLE external_employees (
+        id INT,
+        name STRING,
+        salary DOUBLE,
+        department STRING
+      )
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    STORED AS PARQUET
+    LOCATION '/path/to/external/data'; `;
+export const partTable: string = `CREATE TABLE sales (
+      product_id INT,
+      amount DOUBLE
+    )
+    PARTITIONED BY (sale_date STRING)
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    STORED AS TEXTFILE;
+    `;
+export const bucketTable: string = `CREATE TABLE products (
+      product_id INT,
+      name STRING
+    )
+    CLUSTERED BY (product_id) INTO 10 BUCKETS
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    STORED AS TEXTFILE; `;
+export const query: string = `SELECT
+      employee_id,
+      department,
+      salary,
+    RANK() OVER (PARTITION BY department ORDER BY salary DESC) as
+      rank_in_department,
+    SUM(salary) OVER (PARTITION BY department ORDER BY salary ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as
+      running_total_salary
+    FROM
+    employees; `;
+export const partitionQuery: string = `CREATE TABLE student_data (
+  Student_Name STRING,
+  Student_Rollno INT,
+  Student_Marks FLOAT
+  )
+  PARTITIONED BY (section STRING)
+  ROW FORMAT DELIMITED FIELDS TERMINATED BY ','; `;
+export const bucketQuery: string = `CREATE TABLE products (
+      product_id INT,
+      name STRING
+    )
+    CLUSTERED BY (product_id) INTO 10 BUCKETS
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    STORED AS RCFILE; `;

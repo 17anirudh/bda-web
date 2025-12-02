@@ -12,6 +12,7 @@ export default defineConfig({
     domains: [
       "astro.build",
       "hadoop.apache.org",
+      "avro.apache.org",
       "media.geeksforgeeks.org",
       "technofaq.org",
       "projectcontrolacademy.com",
@@ -19,6 +20,7 @@ export default defineConfig({
       "lh3.googleusercontent.com",
       "i.ytimg.com",
       "tutorialspoint.com",
+      "images.tpointtech.com",
     ],
     remotePatterns: [{ protocol: "https" }],
   },
