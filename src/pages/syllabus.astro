@@ -1,21 +1,10 @@
 ---
 import Layout from "./layout.astro";
-import { DownloadIcon } from "@lucide/astro";
+import FileView from "@custom/FileView.astro";
 ---
 
 <Layout title="Syllabus">
-    <section id="0" class="flex flex-col items-center prose lg:prose-xl">
-      <h1 class="mb-4 text-yellow-400">Syllabus</h1>
-      <div class="w-[90vw] h-[85vh]">
-        <embed
-          src="/syllabus.pdf#zoom=page-width"
-          type="application/pdf"
-          class="w-full h-full"
-        />
-      </div>
-      <a href="/syllabus.pdf" download class="flex items-center mt-4">
-        <DownloadIcon color="white" size="24" />
-        <span class="ml-2">Download</span>
-      </a>
+    <section id="0" class="center prose lg:prose-xl max-w-screen">
+        <FileView src="/material/syllabus.pdf" type="pdf" title="Syllabus" loading="eager" />
     </section>
 </Layout>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  src: string;
+  type: "pdf" | "docx";
+  title: string;
+  loading?: "lazy" | "eager";
+}
+const { src, type, title, loading = "lazy" } = Astro.props;
+var viewSrc: string | null = null;
+
+if (type === "pdf") {
+  viewSrc = src;
+}
+else {
+  viewSrc = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(src)}`;
+}
+
+---
+
+<div class="w-[90%] h-[85vh] border border-zinc-800/40 rounded-md overflow-hidden">
+    <iframe
+        src={viewSrc}
+        class="w-full h-full"
+        allowfullscreen
+        loading={loading}
+        title={title}
+    />
+</div>

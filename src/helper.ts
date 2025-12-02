@@ -20,25 +20,6 @@ interface DescType {
   description: string;
   path: string;
 }
-interface HadoopImages {
-  src: string;
-  alt: string;
-}
-
-export const hadoopImages: HadoopImages[] = [
-  {
-    src: "https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsarchitecture.png",
-    alt: "HDFS Architecture",
-  },
-  {
-    src: "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200820173200/secondary-namenode.png",
-    alt: "Secondary NameNode",
-  },
-  {
-    src: "https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/images/hdfsdatanodes.png",
-    alt: "Data Replication",
-  },
-];
 
 export const navItems: NavType[] = [
   {

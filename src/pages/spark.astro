@@ -1,0 +1,336 @@
+---
+import Layout from "./layout.astro";
+import FileView from "@/components/FileView.astro";
+import { Image } from "astro:assets";
+
+const narrowRddCode: string =
+`rdd = sc.parallelize([1, 2, 3])
+rdd2 = rdd.map(lambda x: x + 1)   # narrow
+print(rdd2.collect())
+`;
+const wideRddCode: string =
+    `rdd = sc.parallelize([("a",1), ("b",1), ("a",2)])
+    rdd2 = rdd.reduceByKey(lambda x, y: x + y)  # wide
+    print(rdd2.collect())
+`;
+const wideDfCode: string =
+    `#DataFrame WIde transform
+    df = spark.createDataFrame([("a",10), ("a",20), ("b",5)], ["key","val"])
+    df2 = df.groupBy("key").sum("val")  # wide
+    df2.show()                          # action
+`;
+---
+
+<Layout title="Spark">
+    <section id="landing" class="prose lg:prose-xl center min-w-screen p-5  text-white">
+        <h1>Apache Spark</h1>
+        <div id="logo">
+            <Image
+              src="https://spark.apache.org/images/spark-logo-rev.svg"
+              alt="Apache Spark Logo"
+              width={270}
+              height={270}
+              priority
+            />
+        </div>
+        <div>
+            <iframe title="Fireship 100s" width="320" height="300" src="https://www.youtube-nocookie.com/embed/IELMSD2kdmk?autoplay=1&modestbranding=1&mute=1&playsinline=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" />
+        </div>
+    </section>
+    <section id="external" class="prose lg:prose-xl center min-w-screen p-5 text-white">
+        <FileView src="https://raw.githubusercontent.com/17anirudh/media/main/Unit%205.docx" type="docx" title="Notes" />
+        <table class="w-[90%]">
+            <thead><tr><th>S.No.</th><th><p style="text-align:center;">MapReduce</p>
+            </th><th><p style="text-align:center;">Spark</p>
+            </th></tr></thead><tbody><tr><td>1.</td><td>It is a framework that is open-source which is used for writing data into the Hadoop Distributed File System.</td><td>It is an open-source framework used for faster data processing.</td></tr><tr><td>2.</td><td>It is having a very slow speed as compared to Apache Spark.</td><td>It is much faster than MapReduce.</td></tr><tr><td>3.</td><td>It is unable to handle real-time processing.</td><td>It can deal with real-time processing.</td></tr><tr><td>4.</td><td>It is difficult to program as you required code for every process.</td><td>It is easy to program.</td></tr><tr><td>5.</td><td>It supports more security projects.</td><td>Its security is not as good as MapReduce and continuously working on its security issues.</td></tr><tr><td>6.</td><td>For performing the task, It is unable to cache in memory.</td><td>It can cache the memory data for processing its task.</td></tr><tr><td>7.</td><td>Its scalability is good as you can add up to n different nodes.</td><td>It is having low scalability as compared to MapReduce.&nbsp;</td></tr><tr><td>8.</td><td>It actually needs other queries to perform the task.</td><td>It has Spark SQL as its very own query language.</td></tr></tbody>
+        </table>
+    </section>
+    <section class="prose lg:prose-xl center min-w-screen p-5 text-white" id="components">
+        <h1>Spark Components</h1>
+        <div id="logo">
+            <Image
+              src="https://media.geeksforgeeks.org/wp-content/uploads/20200616181455/spark2.png"
+              alt="Apache Spark Logo"
+              inferSize
+              layout="full-width"
+              loading="lazy"
+            />
+        </div>
+        <!-- Context -->
+        <h2>Spark Context</h2>
+        <ul>
+            <li>
+                All the functionalities being provided by Apache Spark are built on the highest of the Spark Core. It delivers speed by providing in-memory computation capability.
+            </li>
+            <li>
+                Spark Core is the foundation of parallel and distributed processing of giant dataset.
+            </li>
+            <li>
+                 It is the main backbone of the essential I/O functionalities and significant in programming and observing the role of the spark cluster. It holds all the components related to scheduling, distributing and monitoring jobs on a cluster, Task dispatching, Fault recovery.
+            </li>
+        </ul>
+        <!-- SQL -->
+        <h2>Spark SQL</h2>
+        <ul>
+            <li>
+                The Spark SQL component is built above the spark core and used to provide the structured processing on the data. It provides standard access to a range of data sources.
+            </li>
+            <li>
+                 It includes Hive, JSON, and JDBC. It supports querying data either via SQL or via the hive language. This also works to access structured and semi-structured information.
+            </li>
+            <li>
+                 It includes Hive, JSON, and JDBC. It supports querying data either via SQL or via the hive language. This also works to access structured and semi-structured information.
+            </li>
+        </ul>
+        <!-- Streaming -->
+        <h2>Spark Streaming</h2>
+        <ul>
+            <li>
+                Spark streaming permits ascendible, high-throughput, fault-tolerant stream process of live knowledge streams
+            </li>
+            <li>
+                Spark can access data from a source like a flume, TCP socket, Kafka, Twitter, RabbitMQ, and more.
+            </li>
+            <li>
+                 Spark uses Micro-batching for real-time streaming. Micro-batching is a technique that permits a method or a task to treat a stream as a sequence of little batches of information. Hence spark streaming groups the live data into small batches.
+            </li>
+        </ul>
+        <!-- MLLib -->
+        <h2>MLLib</h2>
+        <ul>
+            <li>
+                 MLlib in spark is a scalable Machine learning library that contains various machine learning algorithms.
+            </li>
+            <li>
+                The motive behind MLlib creation is to make the implementation of machine learning simple. It contains machine learning libraries and the implementation of various algorithms.
+            </li>
+        </ul>
+        <!-- GraphX -->
+        <h2>GraphX</h2>
+        <ul>
+            <li>
+                It is an API for graphs and graph parallel execution.
+            </li>
+            <li>
+                GraphX provides a distributed graph processing framework that allows for efficient processing of large-scale graphs.
+            </li>
+            <li>
+                GraphX supports various graph algorithms such as PageRank, Connected Components, and Triangle Counting.
+            </li>
+            <li>
+                GraphX also optimizes how we can represent vertex and edges when they are primitive data types. To support graph computation, it supports fundamental operations like subgraph, joins vertices, and aggregate messages as well as an optimized variant of the Pregel API.
+            </li>
+        </ul>
+    </section>
+    <section class="prose lg:prose-xl center min-w-screen p-5 text-white" id="data-items">
+        <!-- RDD -->
+        <h2>Resilient Distributed DataSets</h2>
+        <ul>
+            <li>
+                Spark revolves around the concept of a resilient distributed dataset (RDD), which is a fault-tolerant collection of elements that can be operated on in parallel.
+            </li>
+            <li>
+                Each dataset in RDD is divided into logical partitions, which may be computed on different nodes of the cluster. RDDs can contain any type of Python, Java, or Scala objects, including user-defined classes.
+            </li>
+            <li>
+                RDDs can be created through deterministic operations on either data on stable storage or other RDDs. RDD is a fault-tolerant collection of elements that can be operated on in parallel.
+            </li>
+        </ul>
+        <!-- MapReduce is slow -->
+        <h2>Data Sharing is Slow in MapReduce</h2>
+        <ul>
+            <li>
+                MapReduce is slow because it requires a lot of data movement between nodes.
+            </li>
+            <li>
+                Unfortunately, in most current frameworks, the only way to reuse data between computations is to write it to an external stable storage system.
+            </li>
+            <li>
+                Although this framework provides numerous abstractions for accessing a clusters computational resources, users still want more.
+            </li>
+            <li>
+                Data sharing is slow in MapReduce due to replication, serialization, and disk IO. Regarding storage system, most of the Hadoop applications, they spend more than 90% of the time doing HDFS read-write operations.
+            </li>
+        </ul>
+        <!-- Data sharing using RDD -->
+        <h2>RDD Data Sharing</h2>
+        <ul>
+            <li>
+                The key idea of spark is Resilient Distributed Datasets (RDD); it supports in-memory processing computation.
+            </li>
+            <li>
+                This means, it stores the state of memory as an object across the jobs and the object is sharable between those jobs. Data sharing in memory is 10 to 100 times faster than network and Disk.
+            </li>
+        </ul>
+        <!-- DataFrame -->
+        <h2>DataFrame</h2>
+        <ul>
+            <li>
+                RDDs are foundations of Spark, but if there is not sufficient storage, they misfunction, do not have the concept of schema, store semi-structured data which is inefficient
+            </li>
+            <li>
+                RDDs use serialization and garbage collection techniques increase overhead.
+            </li>
+            <li>A DataFrame in Spark is a distributed table of data arranged in named columns, much like a classic database table.</li>
+            <li>It carries a schema, so Spark understands the structure and can optimize queries under the hood.</li>
+        </ul>
+    </section>
+    <section class="prose lg:prose-xl center min-w-screen p-5 text-white" id="streaming">
+        <h1>SPARK STREAMING</h1>
+        <h2>Spark over Map Reduce</h2>
+        <ul>
+            <li>MapReduce writes intermediate results to disk after every stage, Spark in memory.</li>
+            <li>MapReduce was built for batch-only processing, Spark for batch, stream, ML, SQL and Graph processing.</li>
+            <li>MapReduce forces you to express logic using map → shuffle → reduce. Spark uses high-level APIs for data processing.</li>
+            <li>MapReduce repeatedly starts new JVMs and hammer-writes to HDFS. Spark keeps executors alive, reuses memory, and minimizes disk churn.</li>
+            <li></li>
+        </ul>
+        <!-- Spark v1 -->
+        <h3>Spark Streaming v1</h3>
+        <div id="logo">
+            <Image
+              src="/material/DStream.png"
+              alt="Dstream"
+              loading="lazy"
+              inferSize
+              layout="full-width"
+            />
+        </div>
+        <ul>
+            <li>
+                Spark doesn’t process every event individually. It slices the stream into small time-based batches (e.g., every 5 minutes).
+            </li>
+            <li>
+                Spark treats each batch like a mini dataset. These RDDs flow through a pipeline of transformations inside the Spark Engine.
+            </li>
+            <li>
+                Every bubble = an RDD transformation.
+            </li>
+            <li>
+                Once processing finishes for a batch, Spark writes results to HDFS (or another sink) before moving on to the next batch.
+            </li>
+        </ul>
+        <!-- Spark v2 -->
+        <h3>Spark Streaming v2</h3>
+        <div id="logo">
+            <Image
+              src="https://www.databricks.com/sites/default/files/inline-images/structured-streaming-image.png"
+              alt=""
+              loading="lazy"
+              inferSize
+              layout="full-width"
+            />
+        </div>
+        <ul>
+            <li>
+                <h4>Left Side - Your Query Looks Like Batch</h4>
+                <ul>
+                    <li>
+                        You start with an input table (a streaming DataFrame coming from Kafka, files, etc.).
+                    </li>
+                    <li>
+                        You write a query exactly like you would for batch data—select, groupBy, filter, SQL, whatever.
+                    </li>
+                    <li>
+                        Spark plans it through the Spark SQL Planner.
+                    </li>
+                    <li>
+                        Spark executes your batch-like querys in a continuous streaming logic.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h4>Right Side - How Spark Executes It Over Time</h4>
+                <ul>
+                    <li>
+                        System time progresses—1, 2, 3. Each point in time is a trigger (like a heartbeat).
+                    </li>
+                    <li>
+                        New rows arrive → table becomes bigger, Spark sees the stream as a table that keeps gaining rows.
+                    </li>
+                    <li>
+                        Your query executes again, but only on new data, not the entire dataset each time.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section class="prose lg:prose-xl center min-w-screen p-5 text-white" id="operations">
+        <h1>Manipulations</h1>
+        <!-- Transformations -->
+        <h2>Transformations</h2>
+        <ul>
+            <li>Operations that define a new RDD from an existing one (e.g., map, filter, flatMap, join).</li>
+            <li>Lazy: they don’t run immediately—Spark just builds a recipe (lineage).</li>
+            <li>They describe how data should be processed, but produce no real output yet.</li>
+            <li>
+                <p>Types:</p>
+                <ul>
+                    <li>
+                        Narrow: Each output partition depends on only one input partition. Data flows straight—no swapping, no network shuffle.
+                    </li>
+                    <li>
+                        Wide: Output partitions depend on multiple input partitions. Causes a shuffle—data moves across nodes, sorted, exchanged.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Actions -->
+        <h2>Actions</h2>
+        <ul>
+            <li>Operations that trigger computation and return results.</li>
+            <li>They force Spark to execute the entire lineage.</li>
+            <li>Examples include count(), collect(), reduce(), saveAsTextFile().</li>
+        </ul>
+        <div class="max-w-screen">
+            <pre class="max-w-fit text-wrap text-left">{narrowRddCode}</pre>
+            <pre class="max-w-fit text-wrap text-left">{wideRddCode}</pre>
+            <pre class="max-w-fit text-wrap text-left">{wideDfCode}</pre>
+        </div>
+    </section>
+    <section class="prose lg:prose-xl center min-w-screen p-5 text-white" id="architecture">
+        <h1>Spark Architecture</h1>
+        <div id="logo">
+            <Image
+              src="https://sparkbyexamples.com/wp-content/uploads/2022/11/spark-archietecture-2.jpg"
+              alt="Apache Spark Architecture"
+              inferSize
+              layout="full-width"
+              loading="lazy"
+            />
+        </div>
+        <!-- Driver -->
+        <h2>Driver</h2>
+        <ul>
+            <li>
+                The Spark driver program is the main application process that defines and coordinates the execution of a Spark job.
+            </li>
+            <li>
+                The driver runs the user’s main function, initializes the SparkSession or SparkContext, and orchestrates tasks across distributed worker nodes
+            </li>
+            <li>
+                Interacts with the cluster manager and executors to execute jobs Spark Cluster.
+            </li>
+        </ul>
+        <!-- Cluster Manager -->
+        <h2>Cluster Manager</h2>
+        <ul>
+            <li>
+                The cluster manager allocates resources (CPU, memory) across the cluster and schedules tasks, acting as an intermediary between the driver and executors (Spark Cluster Manager).
+            </li>
+            <li>
+                We have a variety of cluster managers such as Hadoop YARN, Apache Mesos, and Standalone Scheduler.
+            </li>
+        </ul>
+        <!-- Executers -->
+        <h3>Executers</h3>
+        <ul>
+            <li>
+                Spark executors are worker processes that run on nodes in a Spark cluster, responsible for executing tasks assigned by the driver program and managing data storage during computation.
+            </li>
+            <li>
+                Each executor runs in its own Java Virtual Machine (JVM) or, in the case of PySpark, a Python process communicating with a JVM, performing computations and caching data as needed
+            </li>
+        </ul>
+    </section>
+</Layout>

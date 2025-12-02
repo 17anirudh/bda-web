@@ -1,33 +1,11 @@
 ---
 import Layout from "./layout.astro";
-import { DownloadIcon } from "@lucide/astro";
+import FileView from "@custom/FileView.astro";
 ---
 
 <Layout title="PYQs">
-    <section class="prose lg:prose-xl center min-w-screen p-5  text-white">
-        <div class="w-[90vw] h-[85vh]">
-          <embed
-            src="/1.pdf#zoom=page-width"
-            type="application/pdf"
-            class="w-full h-full"
-          />
-        </div>
-        <a href="/1.pdf" download class="flex items-center mt-4">
-          <DownloadIcon color="white" size="24" />
-          <span class="ml-2">Download</span>
-        </a>
-        <br/>
-        <br />
-        <div class="w-[90vw] h-[85vh]">
-          <embed
-            src="/2.pdf#zoom=page-width"
-            type="application/pdf"
-            class="w-full h-full"
-          />
-        </div>
-        <a href="/2.pdf" download class="flex items-center mt-4">
-          <DownloadIcon color="white" size="24" />
-          <span class="ml-2">Download</span>
-        </a>
+    <section class="prose lg:prose-xl center min-w-screen gap-9 p-5  text-white">
+        <FileView src="/material/1.pdf" type="pdf" title="PYQ 1" loading="eager" />
+        <FileView src="/material/2.pdf" type="pdf" title="PYQ 2" />
     </section>
 </Layout>

@@ -1,0 +1,9 @@
+---
+import Layout from "./layout.astro";
+import FileView from "@/components/FileView.astro";
+---
+<Layout title="Complex Data">
+    <section class="prose lg:prose-xl center min-w-screen p-5 text-white">
+        <FileView src="https://raw.githubusercontent.com/17anirudh/media/main/Unit%206.docx" title="Unit 6" type="docx" loading="eager" />
+    </section>
+</Layout>
